@@ -3,3 +3,10 @@
 ################################################################################
 
 /ClearRouteAutoGlass/.vs/ClearRouteAutoGlass/v16
+/ClearRouteAutoGlass/CRAG/bin/Debug/net5.0
+/ClearRouteAutoGlass/CRAG/obj
+/.vs
+/ClearRouteAutoGlass/.vs/ClearRouteAutoGlass/config
+/ClearRouteAutoGlass/ARAG.Utility/obj
+/ClearRouteAutoGlass/CRAG.DataAccess/obj
+/ClearRouteAutoGlass/CRAG.Models/obj
