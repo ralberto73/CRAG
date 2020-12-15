@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ARAG.Utility
+namespace CRAG.Utility
 {
     public class Class1
     {
