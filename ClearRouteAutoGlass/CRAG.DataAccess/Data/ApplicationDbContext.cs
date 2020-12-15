@@ -4,7 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CRAG.Data
+namespace CRAG.DataAccess.Data
+
 {
     public class ApplicationDbContext : IdentityDbContext
     {
