@@ -10,6 +10,8 @@ namespace CRAG.DataAccess.Data
 
         public ISystemSettingRepository SystemSetting { get; }
 
+        public IUserRepository Users { get; }
+
         void Save();
     }
 }

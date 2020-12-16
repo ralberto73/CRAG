@@ -13,9 +13,13 @@ namespace CRAG.DataAccess.Data
         {
             _db = db;
             SystemSetting = new SystemSettingRepository(_db);
+            Users = new UserRepository(_db);
         }
 
         public ISystemSettingRepository SystemSetting { get; private set; }
+        public IUserRepository           Users { get; private set; }
+
+
         public void Dispose()
         {
             _db.Dispose();
