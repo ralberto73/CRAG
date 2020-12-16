@@ -17,4 +17,8 @@
     <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CRAG.Models\CRAG.Models.csproj" />
+  </ItemGroup>
+
 </Project>
