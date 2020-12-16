@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CRAG.DataAccess.Data
 {
-    class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _db;
 
