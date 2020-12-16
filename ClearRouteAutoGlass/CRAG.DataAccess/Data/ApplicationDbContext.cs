@@ -17,5 +17,7 @@ namespace CRAG.DataAccess.Data
         }
 
         public DbSet<SystemSetting> SystemSetting { get; set; }
+
+        public DbSet<ApplicationUser> ApplicationUser { get; set; }
     }
 }
