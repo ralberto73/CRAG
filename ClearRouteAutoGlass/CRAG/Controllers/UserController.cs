@@ -25,11 +25,11 @@ namespace CRAG.Controllers
             var claims = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
             if (claims != null)
             {
-         
+
                 list_of_users = _unitOfWork.Users.GetAll(u => u.Id != claims.Value);
             }
             else
-                list_of_users = new List<ApplicationUser>();
+                list_of_users = _unitOfWork.Users.GetAll();
             return View(list_of_users);
         }
     }
