@@ -34,35 +34,33 @@ namespace CRAG.DataAccess.Data.Repository
                 return _connection;
             }
         }
+
+        public K Create(string procedure_name, List<SqlParameter> sql_parameters, params object[] params_values)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        /// <summary>
+        ///    Updates the Entity 
+        /// </summary>
+        /// <param name="procedure_name">Procedure Name</param>
+        /// <param name="sql_parameters">List of Sql Parameters </param>
+        /// <param name="params_values"> Parametres List </param>
+        /// <returns></returns>
+        public int Update(string procedure_name, List<SqlParameter> sql_parameters, params object[] params_values)
+        {
+            Object result = GetValueFromSp<int>(procedure_name, sql_parameters, params_values);  //  Calls the SP
+            return Convert.ToInt32(result);
+        }
+
+
         public List<T> GetAll(string procedure_name, List<SqlParameter> sql_parameters, params object[] params_values)
         {
-            List<T> result_list = new List<T>();
-            using (SqlCommand cmd = new SqlCommand(procedure_name, DBConnection))
-             {
-                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                //  Fills  All Sp Parameters
-                if (sql_parameters != null && sql_parameters.Count > 0 && sql_parameters.Count == params_values.Length)
-                {
-                    int pos = 0;
-                    foreach (SqlParameter parameter in sql_parameters)
-                    {
-                        cmd.Parameters.Add(parameter);
-                        cmd.Parameters[parameter.ParameterName].Value = params_values[pos];
-                        pos++;
-                    }
-                }
-                using (var reader = cmd.ExecuteReader())
-                {
-                        while (reader.Read())
-                        {
-                            //   var a = reader.GetColumnSchema();
-                            var r = MapValues<T>(reader);
-                            result_list.Add(r);
-                        }
-                }
-            }
-            return result_list;           
+            return GetListFromStoredProcedure(procedure_name, sql_parameters, params_values);
         }
+
+
 
         public T GetById(string procedure_name, SqlParameter sql_parameter, K id)
         {
@@ -90,52 +88,85 @@ namespace CRAG.DataAccess.Data.Repository
         }
 
 
-
-        private T MapValues<T>(SqlDataReader reader) where T : class, new()
-        {
-           
-            T result = new T();
-            // var columnShemas = ;
-
-            foreach (var schema in reader.GetColumnSchema())
+        #region SQL_Helpers
+            private T MapValues<T>(SqlDataReader reader) where T : class, new()
             {
-                var property_name = schema.ColumnName.Trim();
-                var type = result.GetType();
-                // Get the PropertyInfo object by passing the property name.
-                PropertyInfo myPropInfo = type.GetProperty(property_name);
-                if (myPropInfo != null)
-                    // Fill  the property.
-                    myPropInfo.SetValue(result, reader[property_name], null);
+           
+                T result = new T();
+                // var columnShemas = ;
+
+                foreach (var schema in reader.GetColumnSchema())
+                {
+                    var property_name = schema.ColumnName.Trim();
+                    var type = result.GetType();
+                    // Get the PropertyInfo object by passing the property name.
+                    PropertyInfo myPropInfo = type.GetProperty(property_name);
+                    if (myPropInfo != null)
+                        // Fill  the property.
+                        myPropInfo.SetValue(result, reader[property_name], null);
+                }
+                return result;
             }
-            return result;
-        }
 
-        public Object GetValueFromSp<T>(string procedure_name, List<SqlParameter> sql_parameters, params object[] params_values)
-        {
-            Object result;
+            public Object GetValueFromSp<T>(string procedure_name, List<SqlParameter> sql_parameters, params object[] params_values)
+            {
+                Object result;
 
 
+                    using (SqlCommand cmd = new SqlCommand(procedure_name, DBConnection))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        //  Fills  All Sp Parameters
+                        if (sql_parameters != null && sql_parameters.Count > 0 && sql_parameters.Count == params_values.Length)
+                        {
+                            int pos = 0;
+                            foreach (SqlParameter parameter in sql_parameters)
+                            {
+
+                                cmd.Parameters.Add(parameter);
+                                cmd.Parameters[parameter.ParameterName].Value = params_values[pos];
+                                pos++;
+                            }
+                        }
+                        result = cmd.ExecuteScalar();
+                    }
+
+                return result;
+            }
+
+            private List<T> GetListFromStoredProcedure(string procedure_name, List<SqlParameter> sql_parameters, object[] params_values)
+            {
+                List<T> result_list = new List<T>();
                 using (SqlCommand cmd = new SqlCommand(procedure_name, DBConnection))
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
-
                     //  Fills  All Sp Parameters
                     if (sql_parameters != null && sql_parameters.Count > 0 && sql_parameters.Count == params_values.Length)
                     {
                         int pos = 0;
                         foreach (SqlParameter parameter in sql_parameters)
                         {
-
                             cmd.Parameters.Add(parameter);
                             cmd.Parameters[parameter.ParameterName].Value = params_values[pos];
                             pos++;
                         }
                     }
-                    result = cmd.ExecuteScalar();
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            //   var a = reader.GetColumnSchema();
+                            var r = MapValues<T>(reader);
+                            result_list.Add(r);
+                        }
+                    }
                 }
+                return result_list;
+            }
 
-            return result;
-        }
+        #endregion
+
 
     }
 }
