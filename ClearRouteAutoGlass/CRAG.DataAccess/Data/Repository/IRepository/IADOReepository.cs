@@ -16,5 +16,9 @@ namespace CRAG.DataAccess.Data.Repository.IRepository
        public T GetById(string procedure_name,
                         SqlParameter sql_parameter, 
                         K id);
+
+        public int Delete( string procedure_name,
+                           SqlParameter sql_parameter,
+                           K id);
     }
 }

@@ -1,5 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
-using MyBusiness.Models;
+﻿using CRAG.Models;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,8 +19,13 @@ namespace CRAG.DataAccess.Data.Repository
         public Brand GetById(int id)
         {
             return base.GetById("Brands_GetById",
-                                 new SqlParameter("@BarandID", SqlDbType.Int),
+                                 new SqlParameter("@Id", SqlDbType.Int),
                                  id);
+        }
+
+        public int Delete (int id) //(string procedure_name, SqlParameter sql_parameter, )
+        {
+            return base.Delete("Brands_Delete", new SqlParameter("@Id", SqlDbType.Int), id);
         }
 
     }

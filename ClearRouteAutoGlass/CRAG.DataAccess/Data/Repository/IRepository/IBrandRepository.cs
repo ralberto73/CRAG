@@ -1,4 +1,4 @@
-﻿using MyBusiness.Models;
+﻿using CRAG.Models;
 using System.Collections.Generic;
 
 namespace CRAG.DataAccess.Data.Repository
@@ -7,5 +7,7 @@ namespace CRAG.DataAccess.Data.Repository
     {
         List<Brand> GetAll();
         Brand GetById(int id);
+
+        int Delete(int id);
     }
 }

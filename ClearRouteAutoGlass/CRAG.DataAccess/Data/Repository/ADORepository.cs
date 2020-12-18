@@ -31,7 +31,6 @@ namespace CRAG.DataAccess.Data.Repository
                 }
                 if (_connection.State != ConnectionState.Open)
                     _connection.Open();
-
                 return _connection;
             }
         }
@@ -82,6 +81,14 @@ namespace CRAG.DataAccess.Data.Repository
             return result;
         }
 
+        public int Delete(string procedure_name, SqlParameter sql_parameter, K id)
+        {
+            var delete_parameters = new List<SqlParameter>(); //  Creates the list of Parameteres 
+            delete_parameters.Add(sql_parameter);             //  Inserts the delete parameter
+            Object result = GetValueFromSp<int>(procedure_name, delete_parameters, id);  //  Calls the SP
+            return Convert.ToInt32(result);                                             // returns teh Rows deleted 
+        }
+
 
 
         private T MapValues<T>(SqlDataReader reader) where T : class, new()
@@ -103,9 +110,32 @@ namespace CRAG.DataAccess.Data.Repository
             return result;
         }
 
+        public Object GetValueFromSp<T>(string procedure_name, List<SqlParameter> sql_parameters, params object[] params_values)
+        {
+            Object result;
 
 
+                using (SqlCommand cmd = new SqlCommand(procedure_name, DBConnection))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
+                    //  Fills  All Sp Parameters
+                    if (sql_parameters != null && sql_parameters.Count > 0 && sql_parameters.Count == params_values.Length)
+                    {
+                        int pos = 0;
+                        foreach (SqlParameter parameter in sql_parameters)
+                        {
+
+                            cmd.Parameters.Add(parameter);
+                            cmd.Parameters[parameter.ParameterName].Value = params_values[pos];
+                            pos++;
+                        }
+                    }
+                    result = cmd.ExecuteScalar();
+                }
+
+            return result;
+        }
 
     }
 }

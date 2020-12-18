@@ -1,4 +1,5 @@
 using CRAG.DataAccess.Data;
+using CRAG.DataAccess.Data.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -49,6 +50,10 @@ namespace CRAG
                 .AddDefaultTokenProviders();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            var s = Configuration.GetConnectionString("DefaultConnection");
+            services.AddSingleton<IADOUnitOfWork>(new ADOUnitOfWork(Configuration.GetConnectionString("DefaultConnection")));
+
+
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
         }
