@@ -1,13 +1,19 @@
-﻿using CRAG.Models;
+﻿using CRAG.DataAccess.Data;
+using CRAG.Models;
 using System.Collections.Generic;
 
-namespace CRAG.DataAccess.Data.Repository
+namespace CRAG.DataAccess
 {
-    public interface IBrandRepository
+    public interface IBrandRepository : IADOReepository<Brand, int>
     {
-        List<Brand> GetAll();
-        Brand GetById(int id);
 
+        int Create(Brand brand);
+        bool Update(Brand brand);
+
+        public Brand GetById(int id);
+        List<Brand>  GetAll();
         int Delete(int id);
+
+
     }
 }

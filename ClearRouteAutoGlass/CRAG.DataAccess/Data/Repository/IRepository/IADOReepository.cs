@@ -3,9 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CRAG.DataAccess.Data.Repository.IRepository
-{
-
+namespace CRAG.DataAccess
+{ 
     public interface  IADOReepository<T, K> where T : new()
     {
         /// <summary>

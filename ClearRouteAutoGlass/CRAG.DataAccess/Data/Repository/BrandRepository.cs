@@ -11,21 +11,19 @@ namespace CRAG.DataAccess.Data.Repository
     {
         public BrandRepository(string connection_string) : base(connection_string) { }
 
-        public List<Brand> GetAll()
+        public int Create( Brand brand)
         {
-            return base.GetAll("Brands_GetAll", null, null);
+            throw new NotImplementedException();
         }
 
-        public Brand GetById(int id)
-        {
-            return base.GetById("Brands_GetById",
-                                 new SqlParameter("@Id", SqlDbType.Int),
-                                 id);
-        }
+        public int Delete(int id) => base.Delete("Brands_Delete", new SqlParameter("@id", SqlDbType.Int), id);
+        List<Brand> IBrandRepository.GetAll() => base.GetAll("Brands_GetAll", null, null);        
 
-        public int Delete (int id) //(string procedure_name, SqlParameter sql_parameter, )
+        public Brand GetById(int id) => base.GetById("Brands_Delete", new SqlParameter("@id", SqlDbType.Int), id);
+
+        public bool Update(Brand brand)
         {
-            return base.Delete("Brands_Delete", new SqlParameter("@Id", SqlDbType.Int), id);
+            throw new NotImplementedException();
         }
 
     }

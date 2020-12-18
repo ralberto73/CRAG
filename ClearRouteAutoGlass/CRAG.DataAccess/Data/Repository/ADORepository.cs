@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 
-namespace CRAG.DataAccess.Data.Repository
+namespace CRAG.DataAccess
 {
     public class ADORepository<T, K> : IADOReepository<T, K> where T : class , new() 
     {
