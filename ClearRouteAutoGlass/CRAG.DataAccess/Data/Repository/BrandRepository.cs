@@ -25,7 +25,7 @@ namespace CRAG.DataAccess.Data.Repository
         public int Delete(int id) => base.Delete("Brands_Delete", new SqlParameter("@id", SqlDbType.Int), id);
         List<Brand> IBrandRepository.GetAll() => base.GetAll("Brands_GetAll", null, null);        
 
-        public Brand GetById(int id) => base.GetById("Brands_Delete", new SqlParameter("@id", SqlDbType.Int), id);
+        public Brand GetById(int id) => base.GetById("Brands_GetById", new SqlParameter("@id", SqlDbType.Int), id);
 
         public bool Update( Brand brand)
         {

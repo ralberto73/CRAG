@@ -77,7 +77,7 @@ namespace CRAG.DataAccess
             {
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.Add(sql_parameter);
-                cmd.Parameters[procedure_name].Value = id;
+                cmd.Parameters[sql_parameter.ParameterName].Value = id;
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     if  (reader.Read())
