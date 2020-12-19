@@ -39,6 +39,34 @@ namespace CRAG.Controllers
             return View(brand);
         }
 
+        //  Post 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Upsert(Brand brand)
+        {
+            if (ModelState.IsValid)
+            {
+                brand.UpdatedBy = GetUser();
+                if (brand.BrandId == 0)
+                {
+                    brand.CreatedBy = brand.UpdatedBy;
+                    _unit_of_work.Brands.Create(brand);
+                }
+                else
+                {
+                    //  _unitOfWork.Category.Update(category);
+                    _unit_of_work.Brands.Update(brand);
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(brand);
+        }
+
+        private string GetUser()
+        {
+            return "Cabilla";
+        }
+
         #region APIs
         [HttpGet]
         public IActionResult GetAll()

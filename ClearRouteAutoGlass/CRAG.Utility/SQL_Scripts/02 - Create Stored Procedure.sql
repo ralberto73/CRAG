@@ -30,8 +30,7 @@ AS
 	 ,@user
 	 ,@user)
 
-  --  Returns the inserted Id
-  RETURN CAST(scope_identity() AS int)
+  SELECT  CAST(scope_identity() AS int)
 GO
 
 CREATE PROCEDURE  [dbo].[Brands_Delete]
@@ -69,7 +68,9 @@ SET
    ,CreationDate = GETDATE()
 WHERE
    [BrandId] = @Id
-return @Id
+
+  SELECT CAST( @@ROWCOUNT AS int)
+
 GO
 
 CREATE PROCEDURE  [dbo].[Brands_GetById]
