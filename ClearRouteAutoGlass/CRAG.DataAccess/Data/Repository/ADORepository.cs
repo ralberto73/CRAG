@@ -36,7 +36,7 @@ namespace CRAG.DataAccess
         }
 
         /// <summary>
-        ///  Call Stored procedure 
+        ///  Call Stored procedure    
         /// </summary>
         /// <param name="procedure_name"></param>
         /// <param name="sql_parameters"></param>
