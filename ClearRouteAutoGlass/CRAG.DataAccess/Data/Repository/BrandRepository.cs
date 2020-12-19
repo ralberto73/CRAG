@@ -13,7 +13,13 @@ namespace CRAG.DataAccess.Data.Repository
 
         public int Create( Brand brand)
         {
-            throw new NotImplementedException();
+            List<SqlParameter> list_of_insert_parametres = new List<SqlParameter>();
+            list_of_insert_parametres.Add(new SqlParameter("@BrandName", SqlDbType.NVarChar,50));
+            list_of_insert_parametres.Add(new SqlParameter("@user"     , SqlDbType.VarChar, 100));
+            return base.Create("Brands_AddNew"
+                                , list_of_insert_parametres
+                                , brand.BrandName
+                                , brand.CreatedBy);
         }
 
         public int Delete(int id) => base.Delete("Brands_Delete", new SqlParameter("@id", SqlDbType.Int), id);
@@ -21,9 +27,17 @@ namespace CRAG.DataAccess.Data.Repository
 
         public Brand GetById(int id) => base.GetById("Brands_Delete", new SqlParameter("@id", SqlDbType.Int), id);
 
-        public bool Update(Brand brand)
+        public bool Update( Brand brand)
         {
-            throw new NotImplementedException();
+            List<SqlParameter> list_of_insert_parametres = new List<SqlParameter>();
+            list_of_insert_parametres.Add(new SqlParameter("@id", SqlDbType.Int));
+            list_of_insert_parametres.Add(new SqlParameter("@BrandName", SqlDbType.NVarChar, 50));
+            list_of_insert_parametres.Add(new SqlParameter("@user", SqlDbType.VarChar, 100));
+            return base.Create("Brands_Update"
+                                , list_of_insert_parametres
+                                , brand.BrandId
+                                , brand.BrandName
+                                , brand.UpdatedBy) > 0;
         }
 
     }

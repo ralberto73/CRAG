@@ -35,9 +35,17 @@ namespace CRAG.DataAccess
             }
         }
 
+        /// <summary>
+        ///  Call Stored procedure 
+        /// </summary>
+        /// <param name="procedure_name"></param>
+        /// <param name="sql_parameters"></param>
+        /// <param name="params_values"></param>
+        /// <returns>The inserted ID </returns>
         public K Create(string procedure_name, List<SqlParameter> sql_parameters, params object[] params_values)
         {
-            throw new NotImplementedException();
+            Object result = GetValueFromSp<int>(procedure_name, sql_parameters, params_values);  
+            return (K) Convert.ChangeType(result, typeof(K));
         }
 
 
@@ -47,7 +55,7 @@ namespace CRAG.DataAccess
         /// <param name="procedure_name">Procedure Name</param>
         /// <param name="sql_parameters">List of Sql Parameters </param>
         /// <param name="params_values"> Parametres List </param>
-        /// <returns></returns>
+        /// <returns>Count of Records Updated</returns>
         public int Update(string procedure_name, List<SqlParameter> sql_parameters, params object[] params_values)
         {
             Object result = GetValueFromSp<int>(procedure_name, sql_parameters, params_values);  //  Calls the SP

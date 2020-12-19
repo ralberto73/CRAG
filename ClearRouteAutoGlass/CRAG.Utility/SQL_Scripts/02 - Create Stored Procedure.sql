@@ -16,9 +16,10 @@ GO
 
 
 ----  Entity : Brands ( Create Stored Procedure  ) 
+
 CREATE PROCEDURE  [dbo].[Brands_AddNew]
-   @BrandName   nvarchar(150)
-  ,@user        varchar(150)
+   @BrandName   nvarchar(50)
+  ,@user        varchar(100)
 AS 
   INSERT INTO dbo.Brands
     ( BrandName 
@@ -34,11 +35,10 @@ AS
 GO
 
 CREATE PROCEDURE  [dbo].[Brands_Delete]
-   @Id   INT
+   @id  INT
 AS 
-
---  Deletes the 
-DELETE  [dbo].[Brands] WHERE [BrandId] = @Id  
+ 
+DELETE  [dbo].[Brands] WHERE [BrandId] = @id 
 
 SELECT @@ROWCOUNT
 GO
@@ -56,9 +56,9 @@ SELECT [BrandId]
 GO
 
 CREATE PROCEDURE  [dbo].[Brands_Update]
-   @BarandID    nvarchar(20)
-  ,@BrandName nvarchar(150)
-  ,@user        varchar(150)
+   @id        INT
+  ,@BrandName  nvarchar(50)
+  ,@user       varchar(100)
 AS 
 
 
@@ -68,12 +68,12 @@ SET
    ,UpdatedBy    = @user
    ,CreationDate = GETDATE()
 WHERE
-   [BrandId] = @BarandID 
-return @BarandID
+   [BrandId] = @Id
+return @Id
 GO
 
 CREATE PROCEDURE  [dbo].[Brands_GetById]
-   @BarandID    nvarchar(20)
+   @id   INT
 AS 
 SELECT 
        [BrandId]
@@ -85,5 +85,5 @@ SELECT
 FROM 
    [dbo].[Brands]
 WHERE
-   [BrandId] = @BarandID
+   [BrandId] = @Id
 GO
