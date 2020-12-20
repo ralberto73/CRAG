@@ -172,3 +172,92 @@ WHERE
    InsuranceId = @Id
 GO
 
+----  Entity : Suppliers ------------------------
+DROP PROCEDURE  IF EXISTS  dbo.Suppliers_AddNew
+GO 
+DROP PROCEDURE  IF EXISTS  dbo.Suppliers_Delete
+GO 
+DROP PROCEDURE  IF EXISTS  dbo.Suppliers_GetAll
+GO 
+DROP PROCEDURE  IF EXISTS  dbo.Suppliers_GetById
+GO
+DROP PROCEDURE  IF EXISTS  dbo.Suppliers_Update
+GO 
+
+CREATE PROCEDURE  dbo.Suppliers_AddNew
+   @SupplierName   NVARCHAR(50)
+  ,@user        VARCHAR(100)
+AS 
+BEGIN 
+  INSERT INTO dbo.Suppliers
+    ( SupplierName 
+	 ,CreatedBy 
+	 ,UpdatedBy)
+  VALUES
+    ( @SupplierName
+	 ,@user
+	 ,@user)
+  --  Returns the Inserted Id 
+  SELECT  CAST(scope_identity() AS int)
+END
+GO
+
+CREATE PROCEDURE  dbo.Suppliers_Delete
+   @id  INT
+AS 
+BEGIN
+  DELETE  dbo.Suppliers WHERE SupplierId = @id 
+  SELECT @@ROWCOUNT
+END
+GO
+
+CREATE PROCEDURE dbo.Suppliers_GetAll
+AS 
+BEGIN
+	SELECT 
+		SupplierId
+		,SupplierName
+		,CreatedBy
+		,UpdatedBy
+		,CreationDate
+		,LastUpdateDate
+	FROM 
+		Suppliers
+END
+GO
+
+CREATE PROCEDURE  dbo.Suppliers_Update
+   @id            INT
+  ,@SupplierName  NVARCHAR(50)
+  ,@user          VARCHAR(100)
+AS 
+BEGIN
+  UPDATE  dbo.Suppliers
+  SET  
+	 SupplierName  = @SupplierName
+	,UpdatedBy  = @user
+	   ,CreationDate = GETDATE()
+  WHERE
+	   SupplierId = @Id
+
+  SELECT CAST( @@ROWCOUNT AS int)
+END
+GO
+
+CREATE PROCEDURE  dbo.Suppliers_GetById
+   @id   INT
+AS 
+SELECT 
+       SupplierId
+      ,SupplierName
+      ,CreatedBy
+      ,UpdatedBy
+      ,CreationDate
+      ,LastUpdateDate
+FROM 
+   dbo.Suppliers
+WHERE
+   SupplierId = @Id
+GO
+--------------------------------------------------------------------------
+
