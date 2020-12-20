@@ -9,5 +9,7 @@ namespace CRAG.DataAccess.Data
     {
 
         public IBrandRepository  Brands {get;set;}
+
+        public IInsuranceRepository Insurances { get; set; }
     }
 }

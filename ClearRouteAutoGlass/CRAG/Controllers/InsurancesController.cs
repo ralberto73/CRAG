@@ -15,11 +15,8 @@ namespace CRAG.Controllers
         {
             _unit_of_work = unit_of_work;
         }
-        public IActionResult Index()
-        {
-          //  var a = unit_of_work.Brands.GetAll();
-            return View();
-        }
+        public IActionResult Index() => View();
+
 
         //  Update and Insert  Action 
         //  if id is null => Insert 
@@ -69,7 +66,7 @@ namespace CRAG.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Json(new { data = _unit_of_work.Brands.GetAll() });
+            return Json(new { data = _unit_of_work.Insurances.GetAll() });
         }
 
         [HttpDelete]
