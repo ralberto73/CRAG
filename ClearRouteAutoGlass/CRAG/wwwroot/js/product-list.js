@@ -11,25 +11,25 @@ $(document).ready(function () {
 function loadDataTable() {
     dataTable = $('#tblData').dataTable({
         "ajax": {
-            "url"      : "/insurances/GetAll",
+            "url"      : "/Products/GetAll",
             "type"     : "GET",
             "datatype" :"json"
         },
         "columns": [
-            { "data": "insuranceName", "width": "15%" },
+            { "data": "productName", "width": "15%" },
             { "data": "createdBy", "width": "15%" },
             { "data": "creationDate", "width": "15%" },
             { "data": "updatedBy", "width": "15%" },
             { "data": "lastUpdateDate", "width": "15%" },
             {
-                "data": "insuranceId",
+                "data": "productId",
                 "render": function (data) {
                     return `<div class="text-center">
-                                <a href="/insurances/Upsert/${data}" class='btn btn-success text-white' style='cursor:pointer; width:100px;'>
+                                <a href="/Products/Upsert/${data}" class='btn btn-success text-white' style='cursor:pointer; width:100px;'>
                                     <i class='far fa-edit'></i> Edit
                                 </a>
                                 &nbsp;
-                                <a onclick=Delete("/insurances/Delete/${data}") class='btn btn-danger text-white' style='cursor:pointer; width:100px;'>
+                                <a onclick=Delete("/Products/Delete/${data}") class='btn btn-danger text-white' style='cursor:pointer; width:100px;'>
                                     <i class='far fa-trash-alt'></i> Delete
                                 </a>
                             </div>
