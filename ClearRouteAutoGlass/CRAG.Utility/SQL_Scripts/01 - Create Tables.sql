@@ -71,3 +71,37 @@ ALTER TABLE [dbo].[Products] ADD  CONSTRAINT [DF_Products_CreationDate]  DEFAULT
 GO
 ALTER TABLE [dbo].[Products] ADD  CONSTRAINT [DF_Products_LastUpdateDate]  DEFAULT (getdate()) FOR [LastUpdateDate]
 GO
+
+--- Entity :  Supplier
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Supplier]') AND type in (N'U'))
+BEGIN
+  ALTER TABLE [dbo].[Supplier] DROP CONSTRAINT [DF_Supplier_LastUpdateDate]
+  ALTER TABLE [dbo].[Supplier] DROP CONSTRAINT [DF_Supplier_CreationDate]
+  ALTER TABLE [dbo].[Supplier] DROP CONSTRAINT [DF_Supplier_UpdatedBy]
+  ALTER TABLE [dbo].[Supplier] DROP CONSTRAINT [DF_Supplier_CreatedBy]
+END
+GO
+DROP TABLE IF EXISTS [dbo].[Supplier]
+GO
+CREATE TABLE dbo.Supplier
+(
+	[ProductId]        INT IDENTITY(1,1)   NOT NULL,
+	[ProductName]      VARCHAR     (50)    NOT NULL,
+	[CreatedBy]        VARCHAR     (100)   NOT NULL,
+	[UpdatedBy]        VARCHAR     (100)   NOT NULL,
+	[CreationDate]     DATETIME            NOT NULL,
+	[LastUpdateDate]   DATETIME            NOT NULL,
+ CONSTRAINT [PK_Supplier] PRIMARY KEY CLUSTERED 
+(
+	[ProductId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Supplier] ADD  CONSTRAINT [DF_Supplier_CreatedBy]  DEFAULT ('Anonymous') FOR [CreatedBy]
+GO
+ALTER TABLE [dbo].[Supplier] ADD  CONSTRAINT [DF_Supplier_UpdatedBy]  DEFAULT ('Anonymous') FOR [UpdatedBy]
+GO
+ALTER TABLE [dbo].[Supplier] ADD  CONSTRAINT [DF_Supplier_CreationDate]  DEFAULT (getdate()) FOR [CreationDate]
+GO
+ALTER TABLE [dbo].[Supplier] ADD  CONSTRAINT [DF_Supplier_LastUpdateDate]  DEFAULT (getdate()) FOR [LastUpdateDate]
+GO
