@@ -23,39 +23,39 @@ namespace CRAG.Controllers
         //        else    => Insert
         public IActionResult Upsert(int? id)
         {
-            Brand brand = new Brand();
+            Insurance active_record = new Insurance();
             if (id == null)
             {
-                return View(brand);
+                return View(active_record);
             }
-            brand = _unit_of_work.Brands.GetById(id.GetValueOrDefault());
-            if (brand == null)
+            active_record = _unit_of_work.Insurances.GetById(id.GetValueOrDefault());
+            if (active_record == null)
             {
                 return NotFound();
             }
-            return View(brand);
+            return View(active_record);
         }
 
         //  Post 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(Brand brand)
+        public IActionResult Upsert(Insurance active_record)
         {
             if (ModelState.IsValid)
             {
-                brand.UpdatedBy = GetUser();
-                if (brand.BrandId == 0)
+                active_record.UpdatedBy = GetUser();
+                if (active_record.InsuranceId == 0)
                 {
-                    brand.CreatedBy = brand.UpdatedBy;
-                    _unit_of_work.Brands.Create(brand);
+                    active_record.CreatedBy = active_record.UpdatedBy;
+                    _unit_of_work.Insurances.Create(active_record);
                 }
                 else
                 {
-                    _unit_of_work.Brands.Update(brand);
+                    _unit_of_work.Insurances.Update(active_record);
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(brand);
+            return View(active_record);
         }
 
         private string GetUser()
@@ -72,7 +72,7 @@ namespace CRAG.Controllers
         [HttpDelete]
         public IActionResult Delete(int id)
         {
-              int rows_deleted = _unit_of_work.Brands.Delete(id);
+            int rows_deleted = _unit_of_work.Insurances.Delete(id);
             if (rows_deleted == 0)
             {
                 return Json(new { success = false, message = "Error while deleting." });

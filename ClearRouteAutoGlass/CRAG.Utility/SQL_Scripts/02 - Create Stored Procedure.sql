@@ -260,4 +260,87 @@ WHERE
    SupplierId = @Id
 GO
 --------------------------------------------------------------------------
+DROP PROCEDURE  IF EXISTS  dbo.Products_AddNew
+GO 
+DROP PROCEDURE  IF EXISTS  dbo.Products_Delete
+GO 
+DROP PROCEDURE  IF EXISTS  dbo.Products_GetAll
+GO 
+DROP PROCEDURE  IF EXISTS  dbo.Products_GetById
+GO
+DROP PROCEDURE  IF EXISTS  dbo.Products_Update
+GO 
 
+CREATE PROCEDURE  dbo.Products_AddNew
+   @ProductName   NVARCHAR(50)
+  ,@user          VARCHAR(100)
+AS 
+BEGIN 
+  INSERT INTO dbo.Products 
+    ( ProductName ,CreatedBy ,UpdatedBy)
+  VALUES
+    ( @ProductName,@user ,@user)
+  --  Returns the Inserted Id 
+  SELECT  CAST(scope_identity() AS int)
+END
+GO
+
+CREATE PROCEDURE  dbo.Products_Delete
+   @id  INT
+AS 
+BEGIN
+  DELETE  dbo.Products 
+  WHERE 
+     ProductId = @id 
+  SELECT @@ROWCOUNT
+END
+GO
+
+CREATE PROCEDURE dbo.Products_GetAll
+AS 
+BEGIN
+	SELECT 
+		 ProductId
+		,ProductName
+		,CreatedBy
+		,UpdatedBy
+		,CreationDate
+		,LastUpdateDate
+	FROM 
+		Products
+END
+GO
+
+CREATE PROCEDURE  dbo.Products_Update
+   @id            INT
+  ,@ProductName  NVARCHAR(50)
+  ,@user          VARCHAR(100)
+AS 
+BEGIN
+  UPDATE  dbo.Products
+  SET  
+	 ProductName  = @ProductName
+	,UpdatedBy  = @user
+	   ,CreationDate = GETDATE()
+  WHERE
+	   ProductId = @Id
+
+  SELECT CAST( @@ROWCOUNT AS int)
+END
+GO
+
+CREATE PROCEDURE  dbo.Products_GetById
+   @id   INT
+AS 
+SELECT 
+       ProductId
+      ,ProductName
+      ,CreatedBy
+      ,UpdatedBy
+      ,CreationDate
+      ,LastUpdateDate
+FROM 
+   dbo.Products
+WHERE
+   ProductId = @Id
+GO
