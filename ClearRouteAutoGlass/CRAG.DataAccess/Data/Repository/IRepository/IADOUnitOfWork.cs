@@ -13,7 +13,5 @@ namespace CRAG.DataAccess.Data
         public IInsuranceRepository Insurances { get; set; }
 
         public IProductRepository Products { get; set; }
-
-        public ISupplierRepository Suppliers { get; set; }
     }
 }
