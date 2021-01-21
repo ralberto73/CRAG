@@ -66,6 +66,7 @@ namespace CRAG.Controllers
             return "Cabilla";
         }
         #region APIs
+
         [HttpGet]
         public IActionResult GetAll()
         {
